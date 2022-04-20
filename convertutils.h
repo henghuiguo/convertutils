@@ -213,4 +213,21 @@ namespace cx {
 	 */
 	String to_string(const String& str);
 
+	/**
+	 * @brief Encode source bytes to hex string.
+	 * @param src The source data.
+	 * @param length The source data length. if length is 0, nothing will be done.
+	 * @param dst The destination data buffer which is twice the length of source data.
+	 * @exception Throw std::invalid_argument if src == NULL or dst == NULL.
+	 */
+	void to_hex(Byte* src, size_t length, char* dst);
+
+	/**
+	 * @brief Decode source hex string to bytes.
+	 * @param src The source hex string.
+	 * @param length The source data length. if length is 0, nothing will be done.
+	 * @param dst The destination data buffer which is half the length of source data.
+	 * @exception Throw std::invalid_argument if src == NULL or dst == NULL.
+	 */
+	void from_hex(const char* src, size_t length, Byte* dst);
 }

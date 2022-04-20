@@ -17,9 +17,7 @@ bool EQUALS(double a, double b) {
 	return ((a - b) < epsilon) && ((b - a) < epsilon);
 }
 
-
-bool test_convert()
-{
+bool test_convert() {
 	ASSERT(cx::to_int8("") == 0);
 	ASSERT(cx::to_int8("-1") == -1);
 	ASSERT(cx::to_int8("1") == 1);
@@ -79,11 +77,24 @@ bool test_convert()
 	// Convert a Float value to string.
 	ASSERT(cx::to_string(3.141592F, 7) == "3.141592");
 
+	// Test hex conversion
+	{
+		std::string src = "ABCDEFXYZ123456";
+		std::string hex;
+		hex.resize(src.size() * 2);
+		cx::to_hex((cx::Byte*)src.c_str(), src.size(), (char*)hex.c_str());
+		ASSERT(hex == "41424344454658595A313233343536");
+
+		std::string src2;
+		src2.resize(hex.size() / 2);
+		cx::from_hex(hex.c_str(), hex.size(), (cx::Byte*)src2.c_str());
+		ASSERT(src == src2);
+	}
+
 	return true;
 }
 
-int main()
-{
+int main() {
 	if (!test_convert()) return 1;
 
 	printf("All tests passed!\n");
